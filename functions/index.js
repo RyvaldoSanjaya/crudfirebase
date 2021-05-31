@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+// eslint-disable-next-line linebreak-style
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
@@ -24,8 +26,17 @@ app.post("/api/create", async (req, res)=>{
   try {
     await db.collection("customers").doc("/"+req.body.id+"/").create({
       name: req.body.name,
-      description: req.body.description,
-      sever: req.body.sever,
+      umur: req.body.umur,
+      provinsi: req.body.provinsi,
+      q1: req.body.q1,
+      q2: req.body.q2,
+      q3: req.body.q3,
+      q4: req.body.q4,
+      q5: req.body.q5,
+      q6: req.body.q6,
+      q7: req.body.q7,
+      score: req.body.score,
+      rank: req.body.rank,
     });
     return res.status(200).send();
   } catch (error) {
@@ -47,8 +58,17 @@ app.get("/api/read", async (req, res)=>{
         const selectedItem={
           id: doc.id,
           name: doc.data().name,
-          description: doc.data().description,
-          sever: doc.data().sever,
+          umur: doc.data().umur,
+          provinsi: doc.data().provinsi,
+          q1: doc.data().q1,
+          q2: doc.data().q2,
+          q3: doc.data().q3,
+          q4: doc.data().q4,
+          q5: doc.data().q5,
+          q6: doc.data().q6,
+          q7: doc.data().q7,
+          score: doc.data().score,
+          rank: doc.data().rank,
         };
         response.push(selectedItem);
       }
@@ -68,8 +88,17 @@ app.put("/api/update/:id", async (req, res)=>{
 
     await document.update({
       name: req.body.name,
-      description: req.body.description,
-      sever: req.body.sever,
+      umur: req.body.umur,
+      provinsi: req.body.provinsi,
+      q1: req.body.q1,
+      q2: req.body.q2,
+      q3: req.body.q3,
+      q4: req.body.q4,
+      q5: req.body.q5,
+      q6: req.body.q6,
+      q7: req.body.q7,
+      score: req.body.score,
+      rank: req.body.rank,
     });
 
     return res.status(200).send();
