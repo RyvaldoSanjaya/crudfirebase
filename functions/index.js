@@ -25,7 +25,6 @@ app.get("/hello-world", (req, res)=>{
 app.post("/api/create", async (req, res)=>{
   try {
     await db.collection("customers").doc("/"+req.body.id+"/").create({
-      name: req.body.name,
       umur: req.body.umur,
       provinsi: req.body.provinsi,
       q1: req.body.q1,
@@ -57,7 +56,6 @@ app.get("/api/read", async (req, res)=>{
       for (const doc of docs) {
         const selectedItem={
           id: doc.id,
-          name: doc.data().name,
           umur: doc.data().umur,
           provinsi: doc.data().provinsi,
           q1: doc.data().q1,
@@ -87,7 +85,6 @@ app.put("/api/update/:id", async (req, res)=>{
     const document=db.collection("customers").doc(req.params.id);
 
     await document.update({
-      name: req.body.name,
       umur: req.body.umur,
       provinsi: req.body.provinsi,
       q1: req.body.q1,
