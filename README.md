@@ -3,9 +3,7 @@ https://us-central1-myapp-fb2ce.cloudfunctions.net/app/api/create
 # posting example
 {
     "id": 6,
-    "name" : "malam",
-    "umur" : "5",
-    "provinsi" : "Riau",
+    "age" : "5",
     "q1" : 5,
     "q2" : 5,
     "q3" : 5,
@@ -24,9 +22,7 @@ https://us-central1-myapp-fb2ce.cloudfunctions.net/app/api/read
 https://us-central1-myapp-fb2ce.cloudfunctions.net/app/api/update/4
 #update example
 {
-    "name" : "malam",
-    "umur" : "5",
-    "provinsi" : "Riau",
+    "age" : "5",
     "q1" : 5,
     "q2" : 5,
     "q3" : 5,
