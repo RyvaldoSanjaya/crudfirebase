@@ -9,7 +9,8 @@ Original file is located at
 
 # Commented out IPython magic to ensure Python compatibility.
 from sklearn.cluster import KMeans
-import numpy as np 
+import tensorflow as tf
+from tensorflow import keras
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -18,56 +19,74 @@ import seaborn as sns
 url = 'https://raw.githubusercontent.com/nxdxnz/dataset/main/fixedata.csv'
 result = pd.read_csv(url)
 
+# Menjumlahkan semua jawaban dari pertanyaan
 question = list(result)
 question.remove('id')
 question1 = list(question)
 question1.remove('age')
 result['total skor jawaban'] = result[question1].sum(axis=1)
 
+# Membuat rank dari total skor jawaban
 result['rank'] = result['total skor jawaban'].rank(ascending=False)
 result.sort_values("rank", inplace = True)
 
 """Distribusi"""
 
+# Distribusi jawaban pada pertanyaan 1
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['q1'], palette = 'magma')
 plt.title('Distribusi Jawaban 1', fontsize = 20)
 plt.show()
+plt.savefig('plot1.png')
 
+# Distribusi jawaban pada pertanyaan 2
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['q2'], palette = 'magma')
 plt.title('Distribusi Jawaban 2', fontsize = 20)
 plt.show()
+plt.savefig('plot2.png')
 
+# Distribusi jawaban pada pertanyaan 3
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['q3'], palette = 'magma')
 plt.title('Distribusi Jawaban 3', fontsize = 20)
 plt.show()
+plt.savefig('plot3.png')
 
+# Distribusi jawaban pada pertanyaan 4
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['q4'], palette = 'magma')
 plt.title('Distribusi Jawaban 4', fontsize = 20)
 plt.show()
+plt.savefig('plot4.png')
 
+# Distribusi jawaban pada pertanyaan 5
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['q5'], palette = 'magma')
 plt.title('Distribusi Jawaban 5', fontsize = 20)
 plt.show()
+plt.savefig('plot5.png')
 
+# Distribusi jawaban pada pertanyaan 6
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['q6'], palette = 'magma')
 plt.title('Distribusi Jawaban 6', fontsize = 20)
 plt.show()
+plt.savefig('plot6.png')
 
+# Distribusi jawaban pada pertanyaan 7
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['q7'], palette = 'magma')
 plt.title('Distribusi Jawaban 7', fontsize = 20)
 plt.show()
+plt.savefig('plot7.png')
 
+# Distribusi umur
 plt.rcParams['figure.figsize'] = (5, 4)
 sns.countplot(result['age'], palette = 'crest')
 plt.title('Distribusi umur', fontsize = 20)
 plt.show()
+plt.savefig('plot8.png')
 
 result1 = result[['total skor jawaban', 'age']]
 x = result1.iloc[:, [0, 1]].values
@@ -80,9 +99,192 @@ plt.scatter(x[y_means == 1, 0], x[y_means == 1, 1], s = 100, c = 'blue', label =
 plt.scatter(x[y_means == 2, 0], x[y_means == 2, 1], s = 100, c = 'black', label = 'Kategori III')
 
 plt.style.use('default')
-plt.title('Kategori Usia', fontsize = 20)
+plt.title('Kategori', fontsize = 20)
 plt.xlabel('Total Skor')
 plt.ylabel('Umur')
 plt.legend()
 plt.grid()
 plt.show()
+
+"""rank 20 besar"""
+
+result20 = result.head(20)
+result20.to_csv('20_besar.csv', index=False)
+
+"""Apabila ada input baru"""
+
+id = np.random.randint (52, 60)
+age = np.random.randint (2, 60)
+jawaban1 = np.random.randint(1, 6)
+jawaban2 = np.random.randint(1, 5)
+jawaban3 = np.random.randint(1, 4)
+jawaban4 = np.random.randint(1, 4)
+jawaban5 = np.random.randint(1, 4)
+jawaban6 = np.random.randint(1, 5)
+jawaban7 = np.random.randint(1, 5)
+
+def pertanyaan_1 (option1) :
+    x = np.array ([1, 2, 3, 4, 5], dtype = float)
+    y = np.array ([1, 2, 3, 4, 5], dtype = int)
+    model1 = tf.keras.Sequential([keras.layers.Dense(units = 1, input_shape = [1])])
+    model1.compile (optimizer = 'sgd', loss = 'mean_squared_error')
+    model1.fit (x, y, epochs = 50)
+    return model1.predict(option1)[0]
+
+nilai_pertanyaan_satu = pertanyaan_1 ([jawaban1])
+
+def pertanyaan_2 (option2) :
+    x2 = np.array ([1, 2, 3, 4], dtype = int)
+    y2 = np.array ([1, 2, 3, 4], dtype = int)
+    model2 = tf.keras.Sequential([keras.layers.Dense(units = 1, input_shape = [1])])
+    model2.compile (optimizer = 'sgd', loss = 'mean_squared_error')
+    model2.fit (x2, y2, epochs = 50)
+    return model2.predict(option2)[0]
+
+nilai_pertanyaan_dua = pertanyaan_2 ([jawaban2])
+
+def pertanyaan_3 (option3) :
+    x3 = np.array ([1, 2, 3], dtype = int)
+    y3 = np.array ([1, 2, 3], dtype = int)
+    model3 = tf.keras.Sequential([keras.layers.Dense(units = 1, input_shape = [1])])
+    model3.compile (optimizer = 'sgd', loss = 'mean_squared_error')
+    model3.fit (x3, y3, epochs = 50)
+    return model3.predict(option3)[0]
+
+nilai_pertanyaan_tiga = pertanyaan_3 ([jawaban3])
+
+def pertanyaan_4 (option4) :
+    x4 = np.array ([1, 2, 3], dtype = int)
+    y4 = np.array ([1, 2, 3], dtype = int)
+    model4 = tf.keras.Sequential([keras.layers.Dense(units = 1, input_shape = [1])])
+    model4.compile (optimizer = 'sgd', loss = 'mean_squared_error')
+    model4.fit (x4, y4, epochs = 50)
+    return model4.predict(option4)[0]
+
+nilai_pertanyaan_empat = pertanyaan_4 ([jawaban4])
+
+def pertanyaan_5 (option5) :
+    x5 = np.array ([1, 2, 3], dtype = int)
+    y5 = np.array ([1, 2, 3], dtype = int)
+    model5 = tf.keras.Sequential([keras.layers.Dense(units = 1, input_shape = [1])])
+    model5.compile (optimizer = 'sgd', loss = 'mean_squared_error')
+    model5.fit (x5, y5, epochs = 50)
+    return model5.predict(option5)[0]
+
+nilai_pertanyaan_lima = pertanyaan_5 ([jawaban5])
+
+def pertanyaan_6 (option6) :
+    x6 = np.array ([1, 2, 3, 4], dtype = int)
+    y6 = np.array ([1, 2, 3, 4], dtype = int)
+    model6 = tf.keras.Sequential([keras.layers.Dense(units = 1, input_shape = [1])])
+    model6.compile (optimizer = 'sgd', loss = 'mean_squared_error')
+    model6.fit (x6, y6, epochs = 50)
+    return model6.predict(option6)[0]
+
+nilai_pertanyaan_enam = pertanyaan_6 ([jawaban6])
+
+def pertanyaan_7 (option7) :
+    x7 = np.array ([1, 2, 3, 4], dtype = int)
+    y7 = np.array ([1, 2, 3, 4], dtype = int)
+    model7 = tf.keras.Sequential([keras.layers.Dense(units = 1, input_shape = [1])])
+    model7.compile (optimizer = 'sgd', loss = 'mean_squared_error')
+    model7.fit (x7, y7, epochs = 50)
+    return model7.predict(option7)[0]
+
+nilai_pertanyaan_tujuh = pertanyaan_7 ([jawaban7])
+
+total_score = np.around(nilai_pertanyaan_satu) + np.around(nilai_pertanyaan_dua) + np.around(nilai_pertanyaan_tiga) + np.around(nilai_pertanyaan_empat) + np.around(nilai_pertanyaan_lima) + np.around(nilai_pertanyaan_enam) + np.around(nilai_pertanyaan_tujuh)
+
+jawaban1 = int(jawaban1)
+jawaban2 = int(jawaban2)
+jawaban3 = int(jawaban3)
+jawaban4 = int(jawaban4)
+jawaban5 = int(jawaban5)
+jawaban6 = int(jawaban6)
+jawaban7 = int(jawaban7)
+totalskor = int(total_score)
+df2 = pd.DataFrame([[id, age, jawaban1, jawaban2, jawaban3, jawaban4, jawaban5, jawaban6, jawaban7, totalskor]], columns=['id', 'age', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'total skor jawaban'])
+result = result.append(df2)
+result["rank"] = result["total skor jawaban"].rank(ascending=False)
+result.sort_values("rank", inplace = True)
+
+"""Distribusi setelah penambahan"""
+
+# Distribusi jawaban pada pertanyaan 1
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['q1'], palette = 'magma')
+plt.title('Distribusi Jawaban 1', fontsize = 20)
+plt.show()
+plt.savefig('plot1.png')
+
+# Distribusi jawaban pada pertanyaan 2
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['q2'], palette = 'magma')
+plt.title('Distribusi Jawaban 2', fontsize = 20)
+plt.show()
+plt.savefig('plot2.png')
+
+# Distribusi jawaban pada pertanyaan 3
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['q3'], palette = 'magma')
+plt.title('Distribusi Jawaban 3', fontsize = 20)
+plt.show()
+plt.savefig('plot3.png')
+
+# Distribusi jawaban pada pertanyaan 4
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['q4'], palette = 'magma')
+plt.title('Distribusi Jawaban 4', fontsize = 20)
+plt.show()
+plt.savefig('plot4.png')
+
+# Distribusi jawaban pada pertanyaan 5
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['q5'], palette = 'magma')
+plt.title('Distribusi Jawaban 5', fontsize = 20)
+plt.show()
+plt.savefig('plot5.png')
+
+# Distribusi jawaban pada pertanyaan 6
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['q6'], palette = 'magma')
+plt.title('Distribusi Jawaban 6', fontsize = 20)
+plt.show()
+plt.savefig('plot6.png')
+
+# Distribusi jawaban pada pertanyaan 7
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['q7'], palette = 'magma')
+plt.title('Distribusi Jawaban 7', fontsize = 20)
+plt.show()
+plt.savefig('plot7.png')
+
+# Distribusi umur
+plt.rcParams['figure.figsize'] = (5, 4)
+sns.countplot(result['age'], palette = 'crest')
+plt.title('Distribusi umur', fontsize = 20)
+plt.show()
+plt.savefig('plot8.png')
+
+result1 = result[['total skor jawaban', 'age']]
+x = result1.iloc[:, [0, 1]].values
+
+km = KMeans(n_clusters = 3, init = 'k-means++', max_iter = 300, n_init = 10, random_state = 0)
+y_means = km.fit_predict(x)
+
+plt.scatter(x[y_means == 0, 0], x[y_means == 0, 1], s = 100, c = 'red', label = 'Kategori I')
+plt.scatter(x[y_means == 1, 0], x[y_means == 1, 1], s = 100, c = 'blue', label = 'Kategori II')
+plt.scatter(x[y_means == 2, 0], x[y_means == 2, 1], s = 100, c = 'black', label = 'Kategori III')
+
+plt.style.use('default')
+plt.title('Kategori', fontsize = 20)
+plt.xlabel('Total Skor')
+plt.ylabel('Umur')
+plt.legend()
+plt.grid()
+plt.show()
+
+"""Ranking 20 baru"""
+
+result20 = result.head(20)
+result20.to_csv('20_besar.csv', index=False)
