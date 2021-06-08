@@ -10,6 +10,7 @@ Original file is located at
 # Commented out IPython magic to ensure Python compatibility.
 from sklearn.cluster import KMeans
 import tensorflow as tf
+import numpy as np
 from tensorflow import keras
 import pandas as pd
 import matplotlib.pyplot as plt
